@@ -75,7 +75,6 @@ namespace Plugin.Library
         {
             if (Context.PreEntityImages.Contains(preImageName) && Context.PreEntityImages[preImageName] is Entity)
             {
-
                 PreImageEntity = (Entity)Context.PreEntityImages[preImageName];
             }
         }

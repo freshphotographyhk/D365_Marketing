@@ -7,6 +7,7 @@ using D365Meta;
 namespace Plugin
 {
     using Library;
+    using Microsoft.Xrm.Sdk.Query;
     using System.Collections.Generic;
 
     public class Contact_CalculateContactScore : IPlugin
@@ -34,7 +35,7 @@ namespace Plugin
             Env = new PluginEnv(serviceProvider);
             if (Env.IsValidReq())
             {
-                var entity = Env.TargetEntity;
+                var entity = Env.Svc.Retrieve(Contact.EntityName, Env.TargetEntity.Id, new ColumnSet(true));
                 try
                 {
                     // set pre image entity
@@ -45,9 +46,8 @@ namespace Plugin
 
                     foreach(string fd in StringFDList)
                     {
-                        CalculateString_ContactScoreField(fd);
+                        CalculateString_ContactScoreField(fd, entity);
                     }
-
 
                     if (ContactScore > 100.00M)
                     {
@@ -69,9 +69,9 @@ namespace Plugin
             }
         }
 
-        public void CalculateString_ContactScoreField(string fdName)
+        public void CalculateString_ContactScoreField(string fdName, Entity entity)
         {
-            var postFdValue = Env.TargetEntity.GetAttr<string>(fdName);
+            var postFdValue = entity.GetAttr<string>(fdName);
 
             if (Env.Context.MessageName == "Create")
             {
@@ -83,11 +83,11 @@ namespace Plugin
                 var preFdValue = Env.PreImageEntity.GetAttr<string>(fdName);
                 if(string.IsNullOrWhiteSpace(preFdValue))
                 {
-                    if (string.IsNullOrWhiteSpace(postFdValue)) ContactScore -= ContactScoreTranAmt;
+                    if (!string.IsNullOrWhiteSpace(postFdValue)) ContactScore += ContactScoreTranAmt;
                 }
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(postFdValue)) ContactScore += ContactScoreTranAmt;
+                    if (string.IsNullOrWhiteSpace(postFdValue)) ContactScore -= ContactScoreTranAmt;
                 }
             }
         }
