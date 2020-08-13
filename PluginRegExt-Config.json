@@ -1,0 +1,10 @@
+{
+  "SelectedSettingsIndex": 0,
+  "SettingsList": [
+    {
+      "ProfileName": "freshphotographyhk",
+      "ConnectionString": "AuthType = Office365;\r\nUsername = ianmok@freshphotographyhk.com;\r\nPassword = Mok94376749;\r\nUrl      = https://freshphotographyhkdev.crm5.dynamics.com/",
+      "DisplayName": "freshphotographyhk"
+    }
+  ]
+}
