@@ -1,0 +1,6 @@
+projectKey=D365Marketing
+serverUrl=http://localhost:9000
+serverVersion=8.4.1.35646
+dashboardUrl=http://localhost:9000/dashboard?id=D365Marketing
+ceTaskId=AXQFvk9TPZfZpEQm0PwN
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXQFvk9TPZfZpEQm0PwN

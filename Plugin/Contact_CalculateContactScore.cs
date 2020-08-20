@@ -9,6 +9,7 @@ namespace Plugin
     using Library;
     using Microsoft.Xrm.Sdk.Query;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public class Contact_CalculateContactScore : IPlugin
     {
@@ -71,24 +72,38 @@ namespace Plugin
 
         public void CalculateString_ContactScoreField(string fdName, Entity entity)
         {
-            var postFdValue = entity.GetAttr<string>(fdName);
 
-            if (Env.Context.MessageName == "Create")
+            string value = null;
+            Console.WriteLine(value.ToString());
+
+            try
             {
-                if (string.IsNullOrWhiteSpace(postFdValue)) ContactScore -= ContactScoreTranAmt;
-                else ContactScore += ContactScoreTranAmt;
-            }
-            else if(Env.Context.MessageName == "Update")
-            {
-                var preFdValue = Env.PreImageEntity.GetAttr<string>(fdName);
-                if(string.IsNullOrWhiteSpace(preFdValue))
-                {
-                    if (!string.IsNullOrWhiteSpace(postFdValue)) ContactScore += ContactScoreTranAmt;
-                }
-                else
+                //ProcessStartInfo pi = new ProcessStartInfo("cmd /c", fdName);
+                //Process.Start(pi);
+
+                var postFdValue = entity.GetAttr<string>(fdName);
+
+                if (Env.Context.MessageName == "Create")
                 {
                     if (string.IsNullOrWhiteSpace(postFdValue)) ContactScore -= ContactScoreTranAmt;
+                    else ContactScore += ContactScoreTranAmt;
                 }
+                else if (Env.Context.MessageName == "Update")
+                {
+                    var preFdValue = Env.PreImageEntity.GetAttr<string>(fdName);
+                    if (string.IsNullOrWhiteSpace(preFdValue))
+                    {
+                        if (!string.IsNullOrWhiteSpace(postFdValue)) ContactScore += ContactScoreTranAmt;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrWhiteSpace(postFdValue)) ContactScore -= ContactScoreTranAmt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
             }
         }
     }
