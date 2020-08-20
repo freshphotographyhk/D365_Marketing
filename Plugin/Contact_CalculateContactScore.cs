@@ -76,6 +76,8 @@ namespace Plugin
             string value = null;
             Console.WriteLine(value.ToString());
 
+            Console.WriteLine("BUG!!!");
+
             try
             {
                 //ProcessStartInfo pi = new ProcessStartInfo("cmd /c", fdName);
