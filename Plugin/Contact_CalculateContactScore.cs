@@ -73,10 +73,10 @@ namespace Plugin
         public void CalculateString_ContactScoreField(string fdName, Entity entity)
         {
 
-            string value = null;
+            /*string value = null;
             Console.WriteLine(value.ToString());
 
-            Console.WriteLine("BUG!!!!");
+            Console.WriteLine("BUG!!!!");*/
 
             try
             {
